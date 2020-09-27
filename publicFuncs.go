@@ -75,6 +75,7 @@ func (l *Logger) LogPrep(level string, sl []string) error {
 // Listen buff is the buffer for channel
 func (l *Logger) Listen() {
 	l.listenLoop(l.Buff)
+	time.Sleep(time.Milisecond * 10)
 }
 
 // StopListen d
