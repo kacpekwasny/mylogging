@@ -98,6 +98,7 @@ func (l *Logger) SetFileNameFormat(formatStr string) {
 // SetFormatStr read Logger.FormatStr for info
 func (l *Logger) SetFormatStr(formatStr string) {
 	l.FormatStr = formatStr
+	l.formats = []string{}
 	frmts := pyfuncs.Split(formatStr, "%")
 	for _, s := range frmts {
 		if s != "" {
