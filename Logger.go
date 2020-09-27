@@ -140,3 +140,8 @@ func (l *Logger) SetMsgLengthLim(lim int) {
 		panic(errors.New("length of message cannot be smaller than 1"))
 	}
 }
+
+// SetLevel level of the logger
+func (l *Logger) SetLevel(v int) {
+	l.Level = v
+}
