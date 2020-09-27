@@ -56,7 +56,7 @@ func LoggerInit() *Logger {
 		FileSizeLimit: 1024,
 		MaxFiles:      10,
 		Level:         5,
-		MsgLengthLim:  200,
+		MsgLengthLim:  70,
 		Buff:          10,
 
 		FileNameFormat: "%D%_%M%_%Y%-gologging",

@@ -2,17 +2,19 @@ package mylogging
 
 import (
 	"errors"
-	"imports/pyfuncs"
 	"time"
+
+	"github.com/kacpekwasny/pyfuncs"
 )
 
 // LogPrep d
 func (l *Logger) LogPrep(level string, sl []string) error {
 	var (
-		parts   []string
-		message string = pyfuncs.Join(" ", sl)
-		prefix  string
-		lines   []string
+		parts         []string
+		message       string = pyfuncs.Join(" ", sl)
+		prefix        string
+		lines         []string
+		linesNoPrefix []string
 	)
 
 	for _, str := range l.formats {
@@ -49,17 +51,24 @@ func (l *Logger) LogPrep(level string, sl []string) error {
 
 	// Prepare lines
 	// "\n" is added in function listenLoop
-	if len(message) > l.MsgLengthLim {
-		var i int
-		for j := range pyfuncs.Range(float64(int(len(message)/l.MsgLengthLim)) - 1) {
-			i = int(j)
-			lines = append(lines, prefix+message[i*l.MsgLengthLim:(i+1)*l.MsgLengthLim])
-		}
-		i++
-		lines = append(lines, prefix+message[i*l.MsgLengthLim:])
+	splitNewLines := pyfuncs.Split(message, "\n")
+	if len(splitNewLines) == 1 {
+		linesNoPrefix = strToLines(splitNewLines[0], l.MsgLengthLim)
 	} else {
-		lines = append(lines, prefix+message)
+		for _, s := range splitNewLines {
+			if len(s) > l.MsgLengthLim {
+				linesNoPrefix = append(linesNoPrefix, strToLines(s, l.MsgLengthLim)...)
+			} else {
+				linesNoPrefix = append(lines, s)
+			}
+		}
 	}
+
+	// Add prefixes
+	for _, s := range linesNoPrefix {
+		lines = append(lines, prefix+s)
+	}
+
 	return l.log(lines)
 }
 

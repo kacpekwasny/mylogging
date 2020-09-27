@@ -1,6 +1,6 @@
 package mylogging
 
-import cmt "imports/commontools"
+import cmt "github.com/kacpekwasny/commontools"
 
 // Debug level 10
 func (l *Logger) Debug(sl ...string) {

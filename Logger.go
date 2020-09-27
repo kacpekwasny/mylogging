@@ -2,8 +2,9 @@ package mylogging
 
 import (
 	"errors"
-	"imports/pyfuncs"
 	"os"
+
+	"github.com/kacpekwasny/pyfuncs"
 )
 
 // Logger keeps info on logging configuration

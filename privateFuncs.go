@@ -3,12 +3,13 @@ package mylogging
 import (
 	"errors"
 	"fmt"
-	cmt "imports/commontools"
-	"imports/pyfuncs"
 	"os"
 	"path/filepath"
 	"strconv"
 	"time"
+
+	cmt "github.com/kacpekwasny/commontools"
+	"github.com/kacpekwasny/pyfuncs"
 )
 
 func (l *Logger) log(lines []string) error {
@@ -295,4 +296,20 @@ func findLogFiles(dirpath string) ([]os.FileInfo, error) {
 
 func stri(i interface{}) string {
 	return fmt.Sprintf("%v", i)
+}
+
+func strToLines(message string, limit int) []string {
+	var lines []string
+	if len(message) > limit {
+		var i int
+		for j := range pyfuncs.Range(float64(int(len(message)/limit)) - 1) {
+			i = int(j)
+			lines = append(lines, message[i*limit:(i+1)*limit])
+		}
+		i++
+		lines = append(lines, message[i*limit:])
+	} else {
+		lines = append(lines, message)
+	}
+	return lines
 }
