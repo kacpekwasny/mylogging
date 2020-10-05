@@ -17,13 +17,14 @@ import (
 func main() {
 	var (
 	    filepath string = "/path/to/your/log/file"
+	    // automaticly completed with ".log"
 	    // When file becomes bigger it will be moved to filepath + ".old.log"
 	    // and a new filepath file will be created
 	    fileSizeLimit int64 = 1024*1024*5
 	    outputToConsole bool = false
 	)
 	lgr := mylogging.LoggerInit()
-	lgr.WrToSingleFile(outPutToConsole, filepathstring, fileSizeLimit)
+	lgr.WrToSingleFile(outputToConsole, filepath, fileSizeLimit)
 
 	lgr.Listen()
 
